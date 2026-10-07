@@ -1,15 +1,14 @@
 {
-    "name": "Tilevault.Tests.EditMode",
-    "rootNamespace": "Tilevault.Tests",
+    "name": "Tilevault.Tests.PlayMode",
+    "rootNamespace": "Tilevault.Tests.PlayMode",
     "references": [
         "Tilevault.Core",
         "Tilevault.Game",
+        "Unity.InputSystem",
         "UnityEngine.TestRunner",
         "UnityEditor.TestRunner"
     ],
-    "includePlatforms": [
-        "Editor"
-    ],
+    "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
     "overrideReferences": true,

@@ -1,0 +1,19 @@
+{
+    "name": "Tilevault.Editor",
+    "rootNamespace": "Tilevault.Editor",
+    "references": [
+        "Tilevault.Core",
+        "Tilevault.Game"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
