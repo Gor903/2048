@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Deleting this file silently restores the permissions removed below, with no
+  warning from anywhere. ReleaseTool's preflight checks that it exists for that
+  reason, and fails the build when it does not.
+
+  No activity is declared here on purpose: Unity generates it, and naming it
+  would have to stay in step with the application-entry player setting.
+-->
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- Unity adds these itself even though the game never opens a socket. -->
+    <uses-permission android:name="android.permission.INTERNET" tools:node="remove" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" tools:node="remove" />
+
+    <!-- Haptics. The only permission the game genuinely uses. -->
+    <uses-permission android:name="android.permission.VIBRATE" />
+
+    <!-- Keeps native libraries compressed in place rather than unpacked at install. -->
+    <application android:extractNativeLibs="false" />
+</manifest>
