@@ -2,8 +2,10 @@
 
 The one place to answer "can we ship yet". Keep it true.
 
-**Current answer: not yet.** Three things block upload, all of them human
-decisions rather than engineering work. They are listed under
+**Current answer: not yet.** Nothing engineering-side is outstanding — the
+artifact is built, signed and verified, and `check-listing.py` passes. What
+remains is hosting, a key copy and a device run, none of which this machine
+can decide. They are listed under
 [Left before upload](#left-before-upload).
 
 ## Automation
@@ -63,7 +65,8 @@ containing *Merge* was ruled out by the live **2048 MERGE GAMES** registration
 - [x] Only the shipping scene in the build list
 - [x] Portrait lock and safe-area rendering
 - [x] Tests green — 76 edit-mode, 12 play-mode, from the command line
-- [ ] Privacy policy written — **placeholder support address still in it**
+- [x] Privacy policy written, carrying a real support address —
+      `check-listing.py` passes every measurable check
 - [x] Artifact builds — `Build/tilevault.aab`, 42 MB
 - [x] Artifact signed with the release key, not the debug key —
       `CN=Gor Beglaryan, O=Gor903, C=AM`, SHA256withRSA
@@ -143,11 +146,11 @@ contact. They are easy to confuse, and one of them is visible to every player.
 
 ## Left before upload
 
-- [ ] **Choose a public support email.** `privacy/index.html` carries
-      `SUPPORT_EMAIL_PLACEHOLDER` in two places;
-      `python3 Publishing/check-listing.py` fails while it is there
 - [ ] **Host the privacy policy over HTTPS** and put the URL in two console
-      fields. A 404 later is grounds for removal, not just rejection
+      fields. A 404 later is grounds for removal, not just rejection. The
+      QuietBlocks listing serves the same kind of page from Cloudflare Pages
+      by uploading its `privacy/` folder unchanged; `privacy/` here is
+      self-contained and loads nothing external, so it travels the same way
 - [ ] **Back the signing key up off this machine**, verified by opening it
 - [ ] **Real device run** — install
       `Build/tilevault-universal-debugsigned.apk`, built from this same

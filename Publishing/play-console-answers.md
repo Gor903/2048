@@ -123,10 +123,9 @@ without an account does not qualify.
 
 ## Developer contacts
 
-- **Support email:** **not yet chosen — required before submission.**
-  `Publishing/privacy/index.html` currently carries
-  `SUPPORT_EMAIL_PLACEHOLDER` in two places, and
-  `Publishing/check-listing.py` fails while it is still there.
+- **Support email:** `gor.beglaryan.rw@gmail.com`, the same address the
+  QuietBlocks listing uses. It is in `Publishing/privacy/index.html` in both
+  places, and `Publishing/check-listing.py` passes.
 
 It is publicly visible on the listing, must match the contact in the privacy
 policy, and is best kept distinct from the Console account address.
