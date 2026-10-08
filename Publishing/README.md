@@ -55,7 +55,9 @@ containing *Merge* was ruled out by the live **2048 MERGE GAMES** registration
 - [x] Platform target, bundle output, development build off
 - [x] Scripting backend (IL2CPP), ARMv7 + ARM64, High stripping
 - [x] Application id
-- [x] Target API 35, minimum API 26
+- [x] Target API 36, minimum API 26 — 36 is what Play has required of new
+      submissions since 31 August 2026, verified against Google's own page
+      rather than taken from a comment
 - [x] Version name 1.0.0, version code 1
 - [x] App icon (adaptive, two layers)
 - [x] Store icon 512×512 — verified fully opaque

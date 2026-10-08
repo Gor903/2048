@@ -10,7 +10,7 @@ meaning — the order of steps does not depend on it.
 
 | What | Where |
 | --- | --- |
-| Bundle | `Build/tilevault.aab` — 43 290 919 bytes |
+| Bundle | `Build/tilevault.aab` — 43 290 904 bytes |
 | Debug symbols | `Build/tilevault-1.0.0-v1-IL2CPP.symbols.zip` |
 | Store icon | `Publishing/art/store-icon-512.png` — 512×512 |
 | Feature graphic | `Publishing/art/feature-graphic-1024x500.png` — 1024×500 |

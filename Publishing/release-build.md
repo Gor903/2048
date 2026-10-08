@@ -32,7 +32,7 @@ is an environment fault, not a project one, and preflight cannot see it.
 ls $AP/SDK/platforms/                       # must contain android-<TargetSdk>
 SDKMGR=$AP/SDK/cmdline-tools/*/bin/sdkmanager
 JAVA_HOME=$AP/OpenJDK $SDKMGR --sdk_root=$AP/SDK --licenses
-JAVA_HOME=$AP/OpenJDK $SDKMGR --sdk_root=$AP/SDK --install "platforms;android-35"
+JAVA_HOME=$AP/OpenJDK $SDKMGR --sdk_root=$AP/SDK --install "platforms;android-36"
 ```
 
 ## Signing

@@ -22,7 +22,7 @@ namespace Tilevault.Editor
         /// project ships.
         /// </summary>
         public const int MinSdk = 26;
-        public const int TargetSdk = 35;     // current Play requirement
+        public const int TargetSdk = 36;     // Play rejects new submissions below this since 31 August 2026
 
         public const string ScenePath = "Assets/Scenes/Main.unity";
 
