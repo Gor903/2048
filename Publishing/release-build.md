@@ -7,7 +7,7 @@ intermediate Gradle project.
 
 ## Tools
 
-Unity ships all of them inside the Android player, so nothing needs
+Unity ships all of them inside the Android player, so none of these need
 installing:
 
 ```sh
@@ -17,6 +17,22 @@ JAVA=$AP/OpenJDK/bin/java
 KEYTOOL=$AP/OpenJDK/bin/keytool
 BT=$(ls $AP/Tools/bundletool-all-*.jar)
 AAPT=$(ls -d $AP/SDK/build-tools/*/ | tail -1)aapt2
+APKSIGNER=$(ls $AP/SDK/build-tools/*/apksigner | tail -1)
+```
+
+### The SDK platform is the exception
+
+The bundled SDK does **not** necessarily carry the platform matching
+`ReleaseSettings.TargetSdk`, and no licences are pre-accepted. Gradle then
+fails late — after the full IL2CPP compile — with "Failed to install the
+following Android SDK packages as some licences have not been accepted". It
+is an environment fault, not a project one, and preflight cannot see it.
+
+```sh
+ls $AP/SDK/platforms/                       # must contain android-<TargetSdk>
+SDKMGR=$AP/SDK/cmdline-tools/*/bin/sdkmanager
+JAVA_HOME=$AP/OpenJDK $SDKMGR --sdk_root=$AP/SDK --licenses
+JAVA_HOME=$AP/OpenJDK $SDKMGR --sdk_root=$AP/SDK --install "platforms;android-35"
 ```
 
 ## Signing
@@ -142,7 +158,9 @@ cp /tmp/tv-universal/universal.apk Build/tilevault-universal-debugsigned.apk
 Two things to know when handing it over:
 
 - It is signed with the local debug key, so it **cannot** be installed over a
-  store build, or vice versa.
+  store build, or vice versa. Check it with `$APKSIGNER verify --print-certs`,
+  never with `keytool`: bundletool signs v2/v3 only, so `keytool` prints
+  nothing at all and a correctly signed APK reads as unsigned.
 - It is roughly twice the bundle size, because a universal APK carries every
   configuration and the native libraries are stored uncompressed. Store
   delivery uses per-device splits and is unaffected. Quote the split size when

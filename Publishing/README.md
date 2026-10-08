@@ -64,10 +64,14 @@ containing *Merge* was ruled out by the live **2048 MERGE GAMES** registration
 - [x] Portrait lock and safe-area rendering
 - [x] Tests green — 76 edit-mode, 12 play-mode, from the command line
 - [ ] Privacy policy written — **placeholder support address still in it**
-- [ ] Artifact builds — in progress
-- [ ] Artifact signed with the release key, not the debug key — pending build
-- [ ] Debug symbols exported — pending build
-- [ ] Permission list verified against the artifact — pending build
+- [x] Artifact builds — `Build/tilevault.aab`, 44 MB
+- [x] Artifact signed with the release key, not the debug key —
+      `CN=Gor Beglaryan, O=Gor903, C=AM`, SHA256withRSA
+- [x] Debug symbols exported — `tilevault-1.0.0-v1-IL2CPP.symbols.zip`, 27.7 MB
+- [x] Permission list verified against the artifact — `VIBRATE` is the whole
+      list, `INTERNET` and `ACCESS_NETWORK_STATE` both count 0
+- [x] Download size measured from the artifact — 25.0–26.5 MB per device,
+      which is not the 44 MB bundle
 
 Everything above is verified against the artifact or by command output, never
 from a build log. A Unity build summary once reported a 35 MB bundle as
@@ -143,8 +147,9 @@ contact. They are easy to confuse, and one of them is visible to every player.
 - [ ] **Host the privacy policy over HTTPS** and put the URL in two console
       fields. A 404 later is grounds for removal, not just rejection
 - [ ] **Back the signing key up off this machine**, verified by opening it
-- [ ] **Real device run** — the sideload APK and its checklist come from
-      Phase 13; editor captures have no status bar, cutout or gesture bar and
+- [ ] **Real device run** — install
+      `Build/tilevault-universal-debugsigned.apk`, built from this same
+      bundle. Editor captures have no status bar, cutout or gesture bar and
       are not a test
 - [ ] Submit listing, forms and artifact — steps in `play-console-steps.md`
 

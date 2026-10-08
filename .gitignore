@@ -67,3 +67,6 @@ Build/
 
 # Dropped by the test framework during play-mode runs
 /[Aa]ssets/Resources/PerformanceTestRun*
+
+# IL2CPP scratch tree, rewritten by every Android build
+.utmp/
