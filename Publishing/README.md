@@ -136,7 +136,7 @@ Shipping without it is the honest option and leaves that door open.
 ### Everything else in the console
 
 - Developer account — $25, identity verification, yours to create
-- Privacy policy hosting — needs a URL that outlives publication
+- Privacy policy hosting — done, and the project must outlive publication
 - Content rating, data safety, target audience — answers in
   `play-console-answers.md`
 - Testing track requirements — read the current rule in the console
@@ -146,11 +146,11 @@ contact. They are easy to confuse, and one of them is visible to every player.
 
 ## Left before upload
 
-- [ ] **Host the privacy policy over HTTPS** and put the URL in two console
-      fields. A 404 later is grounds for removal, not just rejection. The
-      QuietBlocks listing serves the same kind of page from Cloudflare Pages
-      by uploading its `privacy/` folder unchanged; `privacy/` here is
-      self-contained and loads nothing external, so it travels the same way
+- [ ] **Put the policy URL in both console fields.** The page itself is live
+      at https://tilevault-privacy.gor-beglaryan-rw.workers.dev/ — verified
+      200 on the page and on `style.css`, 404 on anything else. It must stay
+      that way: a 404 here after publication is grounds for removal, not just
+      rejection
 - [ ] **Back the signing key up off this machine**, verified by opening it
 - [ ] **Real device run** — install
       `Build/tilevault-universal-debugsigned.apk`, built from this same

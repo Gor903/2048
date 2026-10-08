@@ -112,10 +112,16 @@ asserting it from memory.
 
 ## Privacy policy
 
-- **URL:** *to be filled once the page is hosted* — goes in both
-  **Store listing → Privacy policy** and **App content → Privacy policy**
+- **URL:** https://tilevault-privacy.gor-beglaryan-rw.workers.dev/ — goes in
+  both **Store listing → Privacy policy** and **App content → Privacy policy**
 - **Source:** `Publishing/privacy/index.html` plus `style.css`, self-contained,
   no scripts and no external resources, so any static host will serve it
+- **Host:** Cloudflare, project `tilevault-privacy`, redeployed with
+  `wrangler pages project create` from inside `Publishing/privacy`. The domain
+  is `workers.dev` rather than the `pages.dev` the QuietBlocks policy uses,
+  because Cloudflare now folds Pages into Workers; for two static files the
+  two are the same thing, and the surviving product is the safer home for a
+  URL that must never 404
 
 The page must stay reachable after publication. A 404 on the privacy policy
 is grounds for removal, not merely rejection — so a host that hands out a URL

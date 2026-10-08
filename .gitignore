@@ -70,3 +70,6 @@ Build/
 
 # IL2CPP scratch tree, rewritten by every Android build
 .utmp/
+
+# Wrangler local cache, holds the resolved account id
+.wrangler/

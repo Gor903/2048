@@ -10,13 +10,13 @@ meaning — the order of steps does not depend on it.
 
 | What | Where |
 | --- | --- |
-| Bundle | `<path>` — `<exact byte size>` |
-| Debug symbols | `<path>` |
-| Store icon | `<path>` — 512×512 |
-| Feature graphic | `<path>` — 1024×500 |
-| Screenshots, per locale | `<paths>` |
-| Privacy policy | `<url>` |
-| Support email | `<address>` |
+| Bundle | `Build/tilevault.aab` — 43 290 919 bytes |
+| Debug symbols | `Build/tilevault-1.0.0-v1-IL2CPP.symbols.zip` |
+| Store icon | `Publishing/art/store-icon-512.png` — 512×512 |
+| Feature graphic | `Publishing/art/feature-graphic-1024x500.png` — 1024×500 |
+| Screenshots, en-US | `Publishing/art/screenshots/` — six, 1080×1920 |
+| Privacy policy | https://tilevault-privacy.gor-beglaryan-rw.workers.dev/ |
+| Support email | `gor.beglaryan.rw@gmail.com` |
 
 Build facts the console may ask for: application id, version code,
 version name, minimum and target API, architectures, permission list.
