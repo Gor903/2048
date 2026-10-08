@@ -11,11 +11,27 @@ namespace Tilevault.Game.UI
     {
         public RectTransform Root { get; private set; }
 
-        protected void InitRoot()
+        bool initialised;
+
+        /// <summary>
+        /// Builds the screen once. Called from Awake at runtime and directly by
+        /// the editor capture pass, where Awake never fires — idempotent so
+        /// either path can run first.
+        /// </summary>
+        public void Initialise()
         {
+            if (initialised) return;
+            initialised = true;
+
             Root = (RectTransform)transform;
             UIFactory.Fill(Root);
+            BuildContent();
         }
+
+        void Awake() => Initialise();
+
+        /// <summary>Lays out the screen. Runs exactly once.</summary>
+        protected abstract void BuildContent();
 
         public bool Visible => gameObject.activeSelf;
 

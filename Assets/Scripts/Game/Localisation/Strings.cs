@@ -109,6 +109,7 @@ namespace Tilevault.Game.Localisation
             [Key.BackToHome] = "Back to Home",
 
             // Pause
+            [Key.Pause] = "Pause",
             [Key.Paused] = "Paused",
             [Key.Resume] = "Resume",
             [Key.Restart] = "Restart",
@@ -194,6 +195,7 @@ namespace Tilevault.Game.Localisation
             public const string KeepGoing = "win.keepgoing";
             public const string BackToHome = "win.home";
 
+            public const string Pause = "pause.action";
             public const string Paused = "pause.title";
             public const string Resume = "pause.resume";
             public const string Restart = "pause.restart";

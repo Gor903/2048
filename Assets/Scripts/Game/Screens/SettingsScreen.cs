@@ -15,13 +15,8 @@ namespace Tilevault.Game.Screens
         UiButton reset;
         UiButton back;
 
-        void Awake()
-        {
-            InitRoot();
-            Build();
-        }
 
-        void Build()
+        protected override void BuildContent()
         {
             App app = App.I;
             Theme theme = app.Theme;

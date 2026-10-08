@@ -19,13 +19,8 @@ namespace Tilevault.Game.Screens
         UiButton themesButton;
         UiButton settingsButton;
 
-        void Awake()
-        {
-            InitRoot();
-            Build();
-        }
 
-        void Build()
+        protected override void BuildContent()
         {
             App app = App.I;
             Theme theme = app.Theme;

@@ -46,15 +46,10 @@ namespace Tilevault.Game.Screens
 
         public GameState Game => game;
 
-        void Awake()
-        {
-            InitRoot();
-            Build();
-        }
 
         // ---- construction -----------------------------------------------------
 
-        void Build()
+        protected override void BuildContent()
         {
             Theme theme = App.I.Theme;
 
@@ -119,7 +114,7 @@ namespace Tilevault.Game.Screens
             undo = Control(row.transform, theme, Strings.Key.Undo, OnUndo);
             delete = Control(row.transform, theme, Strings.Key.Delete, OnDelete);
             shuffle = Control(row.transform, theme, Strings.Key.Shuffle, OnShuffle);
-            pause = Control(row.transform, theme, Strings.Key.Paused, OnPause);
+            pause = Control(row.transform, theme, Strings.Key.Pause, OnPause);
         }
 
         UiButton Control(Transform parent, Theme theme, string key, Action onClick)
@@ -136,7 +131,7 @@ namespace Tilevault.Game.Screens
             area.anchorMin = new Vector2(0, 0);
             area.anchorMax = new Vector2(1, 1);
             // Leaves the header and controls above, and room for a banner below.
-            area.offsetMin = new Vector2(36, 180);
+            area.offsetMin = new Vector2(36, 330);
             area.offsetMax = new Vector2(-36, -300);
 
             board = BoardView.Create(area, theme);
@@ -737,6 +732,15 @@ namespace Tilevault.Game.Screens
         {
             winTitle.text = Strings.Get(Strings.Key.YouReached, target);
             winOverlay.SetActive(true);
+        }
+
+        /// <summary>
+        /// Re-measures the grid. Needed in the editor, where no frame ticks and
+        /// the layout only settles when something forces it.
+        /// </summary>
+        public void CaptureRelayout()
+        {
+            if (game != null) board.Relayout(game.Board);
         }
 
         public void CaptureHideOverlays()

@@ -64,3 +64,6 @@ Thumbs.db
 Build/
 *.keystore
 *.jks
+
+# Dropped by the test framework during play-mode runs
+/[Aa]ssets/Resources/PerformanceTestRun*

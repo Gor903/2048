@@ -18,13 +18,8 @@ namespace Tilevault.Game.Screens
         readonly List<(UiButton button, int size)> sizeButtons = new List<(UiButton, int)>();
         UiButton back;
 
-        void Awake()
-        {
-            InitRoot();
-            Build();
-        }
 
-        void Build()
+        protected override void BuildContent()
         {
             Theme theme = App.I.Theme;
 

@@ -35,6 +35,9 @@ namespace Tilevault.Game
         /// <summary>Dialogs and toasts live here, above every screen.</summary>
         public RectTransform OverlayRoot { get; private set; }
 
+        /// <summary>Exposed so the editor capture pass can render it to a texture.</summary>
+        public Canvas Canvas { get; private set; }
+
         public Theme Theme => Themes.Current;
 
         HomeScreen home;
@@ -75,6 +78,18 @@ namespace Tilevault.Game
         {
             if (I == this) I = null;
         }
+
+#if UNITY_EDITOR
+        /// <summary>
+        /// Entry point for the editor capture pass. Unity does not call Awake on
+        /// a component added outside play mode, so the composition root has to be
+        /// started by hand.
+        /// </summary>
+        public void EditorBootstrap()
+        {
+            if (!Application.isPlaying) Awake();
+        }
+#endif
 
         /// <summary>
         /// Chosen once at startup from the system locale. Anything not shipped
@@ -122,7 +137,8 @@ namespace Tilevault.Game
             var canvasGo = new GameObject("Canvas", typeof(Canvas), typeof(CanvasScaler), typeof(GraphicRaycaster));
             canvasGo.transform.SetParent(transform, false);
 
-            var canvas = canvasGo.GetComponent<Canvas>();
+            Canvas canvas = canvasGo.GetComponent<Canvas>();
+            Canvas = canvas;
             canvas.renderMode = RenderMode.ScreenSpaceOverlay;
 
             var scaler = canvasGo.GetComponent<CanvasScaler>();
@@ -157,7 +173,9 @@ namespace Tilevault.Game
             if (EventSystem.current != null) return;
 
             var go = new GameObject("EventSystem", typeof(EventSystem), typeof(InputSystemUIInputModule));
-            DontDestroyOnLoad(go);
+            // DontDestroyOnLoad throws outside play mode, and the editor capture
+            // pass builds this same hierarchy to render a frame.
+            if (Application.isPlaying) DontDestroyOnLoad(go);
         }
 
         void BuildScreens()
@@ -175,6 +193,9 @@ namespace Tilevault.Game
         {
             RectTransform rt = UIFactory.Rect(name, SafeRoot);
             var screen = rt.gameObject.AddComponent<T>();
+            // Explicit rather than relying on Awake: the editor capture pass
+            // constructs screens outside play mode, where Awake never runs.
+            screen.Initialise();
             screen.gameObject.SetActive(false);
             return screen;
         }

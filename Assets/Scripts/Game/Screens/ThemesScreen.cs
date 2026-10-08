@@ -26,13 +26,8 @@ namespace Tilevault.Game.Screens
         UiButton back;
         readonly List<Row> rows = new List<Row>();
 
-        void Awake()
-        {
-            InitRoot();
-            Build();
-        }
 
-        void Build()
+        protected override void BuildContent()
         {
             Theme theme = App.I.Theme;
 
