@@ -1,104 +1,166 @@
-# Publishing
+# Publishing — Tilevault 2048
 
-Status of the project and what is left. Keep this file true — it is the
-one place anyone looks to answer "can we ship yet".
+The one place to answer "can we ship yet". Keep it true.
 
-Write this document in the language the design documents use.
+**Current answer: not yet.** Three things block upload, all of them human
+decisions rather than engineering work. They are listed under
+[Left before upload](#left-before-upload).
 
 ## Automation
 
-| Command | What it does |
+| Menu | What it does |
 | --- | --- |
-| `<menu path> → Apply release settings` | Sets every platform setting |
-| `<menu path> → Verify release readiness` | Prints what blocks a release build |
-| `<menu path> → Bump build number` | `versionCode += 1` before each upload |
-| `<menu path> → Build bundle` | Release build into `<output dir>` |
-| `<menu path> → Capture store screenshots` | Regenerates the store set |
+| Tilevault → Release → Apply Settings | Sets every platform setting |
+| Tilevault → Release → Verify | Lists what blocks a release build |
+| Tilevault → Release → Build Bundle | Release build into `Build/` |
+| Tilevault → Art → Generate All | Regenerates icons and store art |
+| Tilevault → Art → Capture Screenshots | Regenerates the store screenshot set |
+| Tilevault → Rebuild Main Scene | Regenerates the single shipping scene |
 
-Command-line equivalents: see `release-build.md`.
+Command-line equivalents, including the version-code bump, are in
+`release-build.md`. Nothing here is a checkbox someone has to remember
+ticking — the build refuses to run if any of it drifts.
 
 ## Name
 
 | Where | Value |
 | --- | --- |
-| In game, `<locale>` system | |
-| In game, other | |
-| Store listing, `<locale>` | |
-| Store listing, default | |
-| Launcher label, package, build artifact | |
-| Application id | |
+| In game (title screen) | Tilevault, with "2048" as a subtitle |
+| Store listing, en-US | Tilevault 2048 |
+| Launcher label, package, artifact | Tilevault |
+| Application id | `com.gor903.tilevault2048` |
 
 The launcher label is one string for every language — Android does not
-localise it.
+localise it, so seeing the same text across all locales is correct.
 
-Record what name research was actually done: store search, trademark
-registry, or both. They are not the same check.
+**The application id is fixed permanently by the first upload.**
 
-The application id is fixed permanently by the first upload.
+### Name research actually performed
+
+Store search (Google Play, App Store, Steam, Microsoft Store) and a USPTO
+search, both via web search, before any code existed. **A formal trademark
+clearance search was not done, and no non-US registry was checked.** Store
+search finding nothing is not a trademark search.
+
+Three candidates were rejected on collisions, including the first two
+proposed: *Stonefall* collides with "Stonefall Defense: Bolt Puzzle", a live
+puzzle game on Play, and *Tilefall* with "Tilefall: Block Puzzle". Anything
+containing *Merge* was ruled out by the live **2048 MERGE GAMES** registration
+(Guru Network Limited Inc.). Full record in `docs/DECISIONS.md`.
 
 ## Done
 
-- [ ] Platform target, bundle output, development build off
-- [ ] Scripting backend, architectures, code stripping
-- [ ] Application id
-- [ ] Target and minimum API
-- [ ] Version name and version code
-- [ ] App icon
-- [ ] Store icon 512×512
-- [ ] Feature graphic 1024×500
-- [ ] Screenshots, per locale
-- [ ] Interface localised, strings in one file
-- [ ] Privacy policy written, no placeholders left
-- [ ] Artifact signed with the release key, not the debug key
-- [ ] Debug symbols exported
-- [ ] Only shipping scenes in the build list
-- [ ] Orientation and safe-area rendering
-- [ ] Permission list reviewed
-- [ ] Tests green
-- [ ] Artifact builds
+- [x] Platform target, bundle output, development build off
+- [x] Scripting backend (IL2CPP), ARMv7 + ARM64, High stripping
+- [x] Application id
+- [x] Target API 35, minimum API 26
+- [x] Version name 1.0.0, version code 1
+- [x] App icon (adaptive, two layers)
+- [x] Store icon 512×512 — verified fully opaque
+- [x] Feature graphic 1024×500 — verified fully opaque
+- [x] Screenshots — 6 frames, 1080×1920, captured from the real interface
+- [x] Interface localised, every string in one table, zero literals in views
+- [x] Only the shipping scene in the build list
+- [x] Portrait lock and safe-area rendering
+- [x] Tests green — 76 edit-mode, 12 play-mode, from the command line
+- [ ] Privacy policy written — **placeholder support address still in it**
+- [ ] Artifact builds — in progress
+- [ ] Artifact signed with the release key, not the debug key — pending build
+- [ ] Debug symbols exported — pending build
+- [ ] Permission list verified against the artifact — pending build
 
-Verify these against the artifact, not the build log. Record the
-verification output, not a claim.
+Everything above is verified against the artifact or by command output, never
+from a build log. A Unity build summary once reported a 35 MB bundle as
+"664 MB".
 
 ### Permissions
 
-List every permission in the built artifact and why each is there. If
-the engine injected one that the game does not need, record how it was
-removed and what would silently bring it back.
+| Permission | Why |
+| --- | --- |
+| `android.permission.VIBRATE` | The short tick when tiles merge. Switchable off in Settings |
+
+That is the whole list. Unity injects `INTERNET` and `ACCESS_NETWORK_STATE`
+by itself even though this build opens no socket; both are stripped by
+`Assets/Plugins/Android/AndroidManifest.xml` using `tools:node="remove"`.
+
+**Deleting that manifest silently restores them**, with no warning from
+anywhere — which would contradict both the privacy policy and the Data safety
+answers. Its existence is therefore a preflight check, and the build refuses
+to run without it.
 
 ## Decisions for the human
 
 ### Language
 
+Default **en-US**, the only locale at launch. The interface reads the system
+locale at startup and falls back to English, so shipping to all countries is
+safe. Adding a language is a new table in `Strings.cs` and a new listing — no
+code changes.
+
 ### Signing key
 
-Location, alias, certificate validity. Where the backups are and when
-each was last verified by opening it.
+| | |
+| --- | --- |
+| Keystore | `~/keystores/tilevault.keystore` |
+| Backup | `~/keystores/tilevault.keystore.backup1` |
+| Credentials | `~/keystores/tilevault-signing.env`, mode 600 |
+| Alias | `tilevault` |
+| Certificate | `CN=Gor Beglaryan, O=Gor903, C=AM`, RSA 2048 |
+| Valid until | 23 February 2054 |
+| Last verified | 8 October 2026, both copies opened with `keytool -list` |
+
+Both copies are **on the same machine**, which is not a backup. One copy
+belongs somewhere else entirely. Verify any new copy by opening it — a
+corrupt keystore is byte-identical in length to a good one.
 
 ### Monetisation
 
+Free. No in-app purchases. **No ads in this build** — there is no ad SDK
+compiled in, which is why `INTERNET` is stripped and "contains ads" is No.
+
+`PLAN.md` §4 specifies an AdMob integration. It needs an AdMob account that
+only you can create, and turning it on moves six things together: the
+`RequiresInternet` constant, the manifest entry, the ads declaration, the
+advertising-ID declaration, the Data safety form, and the privacy policy.
+Shipping without it is the honest option and leaves that door open.
+
 ### Everything else in the console
 
-- Developer account
-- Privacy policy hosting — URL
+- Developer account — $25, identity verification, yours to create
+- Privacy policy hosting — needs a URL that outlives publication
 - Content rating, data safety, target audience — answers in
   `play-console-answers.md`
-- Testing track requirements and timeline
+- Testing track requirements — read the current rule in the console
 
-Record which email is the console account and which is the public
-support contact. They are easy to confuse and one of them is visible to
-players.
+Record which address is the console account and which is the public support
+contact. They are easy to confuse, and one of them is visible to every player.
 
 ## Left before upload
 
-- [ ] Signing key backed up off this machine, verified by opening
-- [ ] Real device run — checklist at the end of `release-build.md`
-- [ ] Privacy policy live over HTTPS
-- [ ] Listing, forms and artifact submitted — steps in
-      `play-console-steps.md`
+- [ ] **Choose a public support email.** `privacy/index.html` carries
+      `SUPPORT_EMAIL_PLACEHOLDER` in two places;
+      `python3 Publishing/check-listing.py` fails while it is there
+- [ ] **Host the privacy policy over HTTPS** and put the URL in two console
+      fields. A 404 later is grounds for removal, not just rejection
+- [ ] **Back the signing key up off this machine**, verified by opening it
+- [ ] **Real device run** — the sideload APK and its checklist come from
+      Phase 13; editor captures have no status bar, cutout or gesture bar and
+      are not a test
+- [ ] Submit listing, forms and artifact — steps in `play-console-steps.md`
 
 ## Worth doing, not blocking
 
-Things that do not block publication but deserve attention: engine
-splash screen, template leftovers, unused dependencies, packaging
-options, architecture coverage.
+- **Unused dependencies.** The build currently compiles 2D Animation,
+  SpriteShape, PathTracing, UnifiedRayTracing, GPUDriven rendering, Timeline,
+  Visual Scripting and both Physics modules. The game uses none of them.
+  `Assets/Welcome/` holds three ScriptableObjects owned by
+  `com.unity.learn.iet-framework` — package and assets must be removed
+  together or broken assets are left behind.
+- **Template leftovers.** `Assets/Scenes/SampleScene.unity` and
+  `Assets/Welcome/` do not reach the build but drag dependencies with them.
+- **Engine splash screen.** Disabling it needs a paid Unity plan; on the free
+  tier it stays.
+- **Closed testing is the calendar.** A personal account created after
+  November 2023 needs testers opted in continuously for a fixed period before
+  production opens. Everything else here is an evening of work; that part is
+  weeks, so recruit testers before polishing the listing.
