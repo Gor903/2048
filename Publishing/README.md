@@ -116,11 +116,15 @@ code changes.
 | Alias | `tilevault` |
 | Certificate | `CN=Gor Beglaryan, O=Gor903, C=AM`, RSA 2048 |
 | Valid until | 23 February 2054 |
-| Last verified | 8 October 2026, both copies opened with `keytool -list` |
+| Last verified | 9 October 2026, opened with `keytool -list`; the fingerprint matches the one inside the signed bundle |
 
-Both copies are **on the same machine**, which is not a backup. One copy
-belongs somewhere else entirely. Verify any new copy by opening it — a
-corrupt keystore is byte-identical in length to a good one.
+A copy now lives on a separate disk, moved there by hand on 9 October 2026
+— staged from `~/Desktop/games/unity/keys/`, which also carries the
+QuietBlocks key and a note on verifying either. That the copy reached the
+disk intact is the one fact here this machine cannot check for itself.
+
+Verify any new copy by opening it — a corrupt keystore is byte-identical in
+length to a good one.
 
 ### Monetisation
 
@@ -151,7 +155,8 @@ contact. They are easy to confuse, and one of them is visible to every player.
       200 on the page and on `style.css`, 404 on anything else. It must stay
       that way: a 404 here after publication is grounds for removal, not just
       rejection
-- [ ] **Back the signing key up off this machine**, verified by opening it
+- [x] **Signing key backed up off this machine** — copied to a separate disk
+      on 9 October 2026
 - [ ] **Real device run** — install
       `Build/tilevault-universal-debugsigned.apk`, built from this same
       bundle. Editor captures have no status bar, cutout or gesture bar and
