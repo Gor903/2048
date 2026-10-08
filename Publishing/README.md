@@ -64,14 +64,16 @@ containing *Merge* was ruled out by the live **2048 MERGE GAMES** registration
 - [x] Portrait lock and safe-area rendering
 - [x] Tests green — 76 edit-mode, 12 play-mode, from the command line
 - [ ] Privacy policy written — **placeholder support address still in it**
-- [x] Artifact builds — `Build/tilevault.aab`, 44 MB
+- [x] Artifact builds — `Build/tilevault.aab`, 42 MB
 - [x] Artifact signed with the release key, not the debug key —
       `CN=Gor Beglaryan, O=Gor903, C=AM`, SHA256withRSA
-- [x] Debug symbols exported — `tilevault-1.0.0-v1-IL2CPP.symbols.zip`, 27.7 MB
+- [x] Debug symbols exported — `tilevault-1.0.0-v1-IL2CPP.symbols.zip`, 26.3 MB
 - [x] Permission list verified against the artifact — `VIBRATE` is the whole
       list, `INTERNET` and `ACCESS_NETWORK_STATE` both count 0
-- [x] Download size measured from the artifact — 25.0–26.5 MB per device,
-      which is not the 44 MB bundle
+- [x] Download size measured from the artifact — 23.6–25.1 MB per device,
+      which is not the 42 MB bundle
+- [x] Dependencies trimmed to what the game references — 21 packages of the
+      original 57, tests still 76 edit-mode and 12 play-mode green
 
 Everything above is verified against the artifact or by command output, never
 from a build log. A Unity build summary once reported a 35 MB bundle as
@@ -155,14 +157,6 @@ contact. They are easy to confuse, and one of them is visible to every player.
 
 ## Worth doing, not blocking
 
-- **Unused dependencies.** The build currently compiles 2D Animation,
-  SpriteShape, PathTracing, UnifiedRayTracing, GPUDriven rendering, Timeline,
-  Visual Scripting and both Physics modules. The game uses none of them.
-  `Assets/Welcome/` holds three ScriptableObjects owned by
-  `com.unity.learn.iet-framework` — package and assets must be removed
-  together or broken assets are left behind.
-- **Template leftovers.** `Assets/Scenes/SampleScene.unity` and
-  `Assets/Welcome/` do not reach the build but drag dependencies with them.
 - **Engine splash screen.** Disabling it needs a paid Unity plan; on the free
   tier it stays.
 - **Closed testing is the calendar.** A personal account created after
