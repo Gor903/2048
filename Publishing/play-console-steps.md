@@ -237,7 +237,10 @@ fastest way to prove the upload pipeline and the real signed install.
 3. Upload `Build/tilevault.aab`.
 4. Upload `Build/tilevault-1.0.0-v1-IL2CPP.symbols.zip` so crash traces
    deobfuscate.
-5. Release name: `1.0.0 (1)`. Release notes: first release.
+5. Release name: `1.0.0 (1)`. Release notes: the block under
+   **Release notes** in `store-listing.md` — 424 of the 500 characters
+   allowed. The field arrives wrapped in `<en-US>` tags; paste between them
+   and leave the tags.
 6. After processing, open **App integrity** and compare the **upload key**
    certificate against the SHA-256 above. They must match. The **app signing
    key** will be a different fingerprint — that is Google's, and is correct.

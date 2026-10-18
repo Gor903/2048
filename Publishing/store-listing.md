@@ -87,6 +87,35 @@ holds a single permission, for the small vibration when tiles merge, and you
 can turn that off too.
 ```
 
+## Release notes — en-US, 1.0.0 (1)
+
+The console presents this field already wrapped in `<en-US>` tags. Paste the
+text between them and leave the tags alone; they are how the console assigns
+notes to a language, not part of what players read.
+
+Limit is 500 characters per language, measured by `check-listing.py` like
+every other text here. Rewrite this block for each release — it describes one
+release, not the app.
+
+### Release notes
+
+```
+First release.
+
+Slide tiles, merge matching numbers, and push for the highest tile you can reach.
+
+- Four board sizes, each keeping its own best score
+- Stones mode, where immovable blocks crumble after fifteen moves
+- Undo, Delete and Shuffle, three charges of each per game
+- A daily challenge that deals everyone the same board
+- Four themes, two of them unlockable
+
+Plays offline. No ads, no accounts, nothing collected.
+```
+
+No version number in the text. The console shows it beside the notes already,
+and a number repeated by hand is a number that goes stale.
+
 ## Screenshots
 
 Uploaded in this order:

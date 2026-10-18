@@ -28,7 +28,8 @@ def note(msg):
 
 # ---- store text ----------------------------------------------------------
 
-LIMITS = {"App name": 30, "Short description": 80, "Full description": 4000}
+LIMITS = {"App name": 30, "Short description": 80, "Full description": 4000,
+          "Release notes": 500}
 
 
 def blocks(path):
