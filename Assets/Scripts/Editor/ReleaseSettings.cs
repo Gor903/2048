@@ -33,6 +33,12 @@ namespace Tilevault.Editor
         /// </summary>
         public const string ManifestPath = "Assets/Plugins/Android/AndroidManifest.xml";
 
+        /// <summary>
+        /// The activity the manifest must declare. Paired with the GameActivity
+        /// application entry; switching that player setting changes this too.
+        /// </summary>
+        public const string ActivityClass = "com.unity3d.player.UnityPlayerGameActivity";
+
         public const string IconPath = "Assets/Art/Generated/icon_1024.png";
         public const string AdaptiveForegroundPath = "Assets/Art/Generated/icon_fg.png";
         public const string AdaptiveBackgroundPath = "Assets/Art/Generated/icon_bg.png";

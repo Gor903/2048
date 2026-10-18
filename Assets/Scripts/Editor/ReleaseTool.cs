@@ -176,6 +176,17 @@ namespace Tilevault.Editor
                 string manifest = File.ReadAllText(ReleaseSettings.ManifestPath);
                 if (!ReleaseSettings.RequiresInternet && !manifest.Contains("permission.INTERNET"))
                     problems.Add("Custom manifest no longer removes the INTERNET permission.");
+
+                // This file replaces unityLibrary's manifest, so Unity contributes no
+                // activity of its own. Without one the app installs with no icon and
+                // cannot be started, and every other check here still passes.
+                if (!manifest.Contains("android.intent.category.LAUNCHER"))
+                    problems.Add("Custom manifest declares no LAUNCHER activity; " +
+                                 "the app would install with no icon and no way to start.");
+
+                if (!manifest.Contains(ReleaseSettings.ActivityClass))
+                    problems.Add($"Custom manifest does not name {ReleaseSettings.ActivityClass}, " +
+                                 "which is the activity the GameActivity application entry needs.");
             }
 
             EditorBuildSettingsScene[] scenes = EditorBuildSettings.scenes.Where(s => s.enabled).ToArray();
