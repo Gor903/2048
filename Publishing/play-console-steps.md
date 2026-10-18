@@ -85,6 +85,21 @@ Irreversible here, all three:
 
 Tick the declarations about developer-programme policies and US export law.
 
+### Check the application id letter by letter
+
+It ends up in the store address — `play.google.com/store/apps/details?id=…`
+— where it is public and permanent. Read it against the artifact rather than
+against memory:
+
+```sh
+bundletool dump manifest --bundle=Build/tilevault.aab | head -1   # package="…"
+```
+
+`tilevault` is *tile*, the thing the game is made of. It has already been
+mistyped once in the console as `titevault`, which the upload rejected with
+"the package must be named com.gor903.titevault2048". Caught before anything
+was published; after publication there is no fix at all.
+
 ## Step 2 — App content
 
 One section per form. The basis for every answer is in
@@ -271,6 +286,7 @@ higher. Bump it with `ReleaseTool.CIBumpVersionCode`, never by hand.
 | Version code already used | A build with that code was uploaded before | `CIBumpVersionCode`, rebuild, re-upload |
 | Debuggable / development build | `Development Build` left on | Preflight catches this; re-run Apply Settings and rebuild |
 | Package name already in use | The application id is taken globally | Nothing to do but choose another — and it is fixed forever at first upload |
+| "The package must be named …" | The console entry's id differs from the bundle's | Fix the **console**, not the bundle, when the bundle is right: delete the draft app and create it again. A deleted app with zero installs frees its name; one with installs never does |
 | Privacy policy unreachable | The worker is down or the URL moved | Re-deploy from `Publishing/privacy`; verify 200 before resubmitting |
 | Target API too low | Google raised the floor | Raise `ReleaseSettings.TargetSdk`, install the SDK platform, rebuild |
 | Data safety mismatch | A permission appeared that the form does not declare | Re-dump the manifest; the form follows the artifact, not the other way round |
