@@ -150,6 +150,33 @@ namespace Tilevault.Tests.PlayMode
                 "The view and the rules disagree about how many tiles exist.");
         }
 
+        /// <summary>
+        /// The opening position proves nothing: a moved view leaves `tiles` for the
+        /// duration of the slide, so anything that fails to put it back survives the
+        /// check above and shows up only once the board has been played.
+        /// </summary>
+        [UnityTest]
+        public IEnumerator BoardView_LeavesNothingBehindOnceThePositionIsPlayed()
+        {
+            app.StartGame(4, GameMode.Classic);
+            yield return null;
+            yield return null;
+
+            var view = app.GetComponentInChildren<BoardView>(true);
+            var order = new[] { Direction.Left, Direction.Up, Direction.Right, Direction.Down };
+
+            for (int move = 0; move < 12; move++)
+            {
+                Input.Simulate(order[move % order.Length]);
+                yield return new WaitForSeconds(BoardView.MoveDuration + 0.25f);
+
+                TileView[] drawn = view.GetComponentsInChildren<TileView>(false);
+                Assert.AreEqual(CountTiles(Screen.Game.Board), drawn.Length,
+                    $"After move {move + 1} the view shows tiles the rules do not hold. " +
+                    "A view that slid must be pooled, not abandoned where it landed.");
+            }
+        }
+
         // ---- the restart gate --------------------------------------------------
 
         [UnityTest]

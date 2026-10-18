@@ -191,6 +191,15 @@ namespace Tilevault.Game.Presentation
                 yield return null;
             }
 
+            // These left `tiles` when the move started, so RecycleAll cannot see them.
+            // Returning them here keeps the invariant that a view is either placed or pooled.
+            foreach (var m in moving)
+            {
+                if (m.view == null) continue;
+                m.view.gameObject.SetActive(false);
+                recycled.Add(m.view);
+            }
+
             SyncFrom(board);
 
             // Pop whatever the move produced, now that positions are authoritative.
