@@ -62,8 +62,9 @@ Without those variables the build still runs, but the output is named
 ### Losing this key ends the app
 
 No key means no updates, ever, and the application id cannot be changed to
-start again. Both copies currently sit on the same machine, which is not a
-backup — **at least one copy belongs somewhere else entirely.**
+start again. A third copy was moved to a separate disk by hand on 9 October
+2026; the two listed above still share one machine, so **that off-machine
+copy is the only real backup.**
 
 Verify any copy by opening it, never by comparing file size. A corrupt
 keystore is byte-identical in length to a good one:
@@ -110,9 +111,21 @@ That last one is the subtle one. Deleting
 permission with no warning from anywhere, which would contradict both the
 privacy policy and the Data safety answers.
 
+The same file is also the only place the launcher activity is declared — it
+replaces unityLibrary's manifest rather than merging into it, which is why
+Unity's own template ships with both activity blocks and a comment telling
+you to delete the unused one. A manifest without an activity builds, signs
+and uploads cleanly, and produces an app with no icon that cannot be started.
+Preflight therefore asserts both the `LAUNCHER` category and
+`ReleaseSettings.ActivityClass`.
+
 Proven to work in both directions: it passes on the clean project, and on a
 deliberately broken one it named all four faults and the build produced
 nothing.
+
+The activity checks were proven the same way on 18 October 2026 — stripping
+the `<activity>` block made `CIVerify` exit 1 and name both faults; restoring
+it returned `PREFLIGHT OK`.
 
 ## Verifying the artifact
 

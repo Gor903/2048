@@ -3,10 +3,14 @@
 The one place to answer "can we ship yet". Keep it true.
 
 **Current answer: not yet.** Nothing engineering-side is outstanding — the
-artifact is built, signed and verified, and `check-listing.py` passes. What
-remains is hosting, a key copy and a device run, none of which this machine
-can decide. They are listed under
+artifact is built, signed and verified, the submission pack is written, and
+both `check-listing.py` and the test suite pass. What remains is a developer
+account, a device run and the closed-testing period, none of which this
+machine can decide or shorten. They are listed under
 [Left before upload](#left-before-upload).
+
+Last verified end to end on 18 October 2026: 76 edit-mode and 13 play-mode
+tests green, bundle manifest re-dumped, policy URL re-fetched.
 
 ## Automation
 
@@ -66,10 +70,10 @@ containing *Merge* was ruled out by the live **2048 MERGE GAMES** registration
 - [x] Interface localised, every string in one table, zero literals in views
 - [x] Only the shipping scene in the build list
 - [x] Portrait lock and safe-area rendering
-- [x] Tests green — 76 edit-mode, 12 play-mode, from the command line
+- [x] Tests green — 76 edit-mode, 13 play-mode, from the command line
 - [x] Privacy policy written, carrying a real support address —
       `check-listing.py` passes every measurable check
-- [x] Artifact builds — `Build/tilevault.aab`, 42 MB
+- [x] Artifact builds — `Build/tilevault.aab`, 43 293 752 bytes
 - [x] Artifact signed with the release key, not the debug key —
       `CN=Gor Beglaryan, O=Gor903, C=AM`, SHA256withRSA
 - [x] Debug symbols exported — `tilevault-1.0.0-v1-IL2CPP.symbols.zip`, 26.3 MB
@@ -78,7 +82,13 @@ containing *Merge* was ruled out by the live **2048 MERGE GAMES** registration
 - [x] Download size measured from the artifact — 23.6–25.1 MB per device,
       which is not the 42 MB bundle
 - [x] Dependencies trimmed to what the game references — 21 packages of the
-      original 57, tests still 76 edit-mode and 12 play-mode green
+      original 57, tests still 76 edit-mode and 13 play-mode green
+- [x] Launcher activity declared — the custom manifest *replaces*
+      unityLibrary's rather than adding to it, so omitting the activity ships
+      an app that installs with no icon and cannot be started. Preflight now
+      fails on a manifest with no `LAUNCHER` category
+- [x] Sideload APK rebuilt from the shipping bundle — `libil2cpp.so` hashes
+      match, so the device run exercises the artifact that will be uploaded
 
 Everything above is verified against the artifact or by command output, never
 from a build log. A Unity build summary once reported a 35 MB bundle as
@@ -98,6 +108,11 @@ by itself even though this build opens no socket; both are stripped by
 anywhere — which would contradict both the privacy policy and the Data safety
 answers. Its existence is therefore a preflight check, and the build refuses
 to run without it.
+
+That file *replaces* unityLibrary's manifest rather than merging into it, so
+it also has to declare the launcher activity. Without one the app installs
+with no icon and no way to start, and every other check still passes — which
+is why preflight asserts the activity too.
 
 ## Decisions for the human
 
@@ -152,24 +167,25 @@ contact. They are easy to confuse, and one of them is visible to every player.
 
 ## Left before upload
 
+- [ ] **Developer account** — $25 and identity verification, which can take
+      days. Nothing else can start until it clears
+- [ ] **Real device run** — install
+      `Build/tilevault-universal-debugsigned.apk`, rebuilt on 18 October 2026
+      from the shipping bundle. Editor captures have no status bar, cutout or
+      gesture bar and are not a test
 - [ ] **Put the policy URL in both console fields.** The page itself is live
-      at https://tilevault-privacy.gor-beglaryan-rw.workers.dev/ — verified
-      200 on the page and on `style.css`, 404 on anything else. It must stay
-      that way: a 404 here after publication is grounds for removal, not just
-      rejection
+      at https://tilevault-privacy.gor-beglaryan-rw.workers.dev/ — re-verified
+      18 October 2026, 200 on the page and on `style.css`, 404 on anything
+      else. It must stay that way: a 404 here after publication is grounds for
+      removal, not just rejection
 - [x] **Signing key backed up off this machine** — copied to a separate disk
       on 9 October 2026
-- [ ] **Real device run** — install
-      `Build/tilevault-universal-debugsigned.apk`, built from this same
-      bundle. Editor captures have no status bar, cutout or gesture bar and
-      are not a test
-- [ ] Submit listing, forms and artifact — steps in `play-console-steps.md`
+- [ ] **Closed testing period** — weeks of calendar, and the critical path.
+      Recruit testers before polishing anything
+- [ ] Submit listing, forms and artifact — steps in `play-console-steps.md`,
+      which is now filled in rather than an outline
 
 ## Worth doing, not blocking
 
 - **Engine splash screen.** Disabling it needs a paid Unity plan; on the free
   tier it stays.
-- **Closed testing is the calendar.** A personal account created after
-  November 2023 needs testers opted in continuously for a fixed period before
-  production opens. Everything else here is an evening of work; that part is
-  weeks, so recruit testers before polishing the listing.
